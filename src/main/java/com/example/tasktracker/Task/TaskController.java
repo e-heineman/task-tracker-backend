@@ -1,12 +1,10 @@
 package com.example.tasktracker.Task;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "tasks")
@@ -23,5 +21,17 @@ public class TaskController {
     @GetMapping
     public List<Task> getTasks() {
         return taskService.getTasks();
+    }
+
+    @CrossOrigin
+    @GetMapping(path = "{taskId}")
+    public Optional<Task> getTask(@PathVariable("taskId") Long id) {
+        return taskService.getTask(id);
+    }
+
+    @CrossOrigin
+    @PutMapping(path = "{taskId}")
+    public void updateTask(@RequestBody Task task) {
+        taskService.updateTask(task);
     }
 }
